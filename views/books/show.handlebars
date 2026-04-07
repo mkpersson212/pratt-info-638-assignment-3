@@ -27,9 +27,28 @@
         <option value="{{this}}" {{#if (and @root.bookUser (eq @root.bookUser.status this))}}selected{{/if}}>{{this}}</option>
       {{/each}}
     </select>
-    {{!-- Comments Section starts 
-    <input type="hidden" name="comment" value ="{{}}">--}}
     <button type="submit">Submit</button>
+    </form>
+<h2>Comments</h2>
+{{#if comments}}
+  <ul>
+    {{#each comments}}
+      <li>
+        <strong>{{this.userEmail}}:</strong> {{this.text}}
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>Add the first comment here!</p>
+{{/if}}
+
+{{#if currentUser}}
+  <form action="/comments/create" method="post">
+    <input type="hidden" name="_csrf" value="{{_csrfToken}}">
+    <input type="hidden" name="bookId" value="{{bookId}}">
+    <textarea name="text" placeholder="Write your comment here..." required></textarea>
+    <button type="submit">Add Comment</button>
   </form>
+{{/if}}
 </div>
 {{/if}}

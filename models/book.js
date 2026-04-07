@@ -33,4 +33,4 @@ exports.upsert = (book) => {
   }
 }
 
-exports.all = books
+exports.all = books;

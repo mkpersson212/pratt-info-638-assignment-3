@@ -4,7 +4,7 @@ const Author = require('../models/author');
 const Genre = require('../models/genre');
 const BookUser = require('../models/book_user');
 const router = express.Router();
-const AllForBook = require('../models/comment');
+const Comment = require('../models/comment');
 
 
 router.get('/', function(req, res, next) {
@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/form', async (req, res, next) => {
-  res.render('books/form', { title: 'BookedIn || Books', authors: Author.all, genres: Genre.all });
+  res.render('books/form', { title: 'BookedIn || Books', authors: Author.all, genres: Genre.all, });
 });
 
 router.get('/edit', async (req, res, next) => {
@@ -38,6 +38,13 @@ router.get('/show/:id', async (req, res, next) => {
   if (req.session.currentUser) {
     templateVars['bookUser'] = BookUser.get(req.params.id, req.session.currentUser.email);
   }
+  if (req.session.currentUser) { //pulls Comment field content to the Book pages 
+  // and sends user-added comment data to model
+    templateVars['currentUser'] = req.session.currentUser;
+    templateVars['bookUser'] = BookUser.get(req.params.id, req.session.currentUser.email);
+    templateVars['comments'] = AllForBook.AllForBook(req.params.id);
+  }
+
   res.render('books/show', templateVars);
 });
 
