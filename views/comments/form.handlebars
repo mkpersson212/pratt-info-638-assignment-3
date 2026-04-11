@@ -1,0 +1,14 @@
+<h1>Commenting</h1>
+
+<form action="/comments/upsert" role="form" method="post">
+  <input type="hidden" name="_csrf" value="{{_csrfToken}}">
+  <input type="hidden" name="id" value="{{commentIndex}}">
+  <input type="hidden" name="bookId" value="{{comment.bookId}}">
+
+  {{#if comment}}
+    <div>
+      <textarea name="text">{{comment.text}}</textarea>
+    </div>
+  {{/if}}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
