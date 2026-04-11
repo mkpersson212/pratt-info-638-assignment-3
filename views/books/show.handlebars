@@ -35,6 +35,9 @@
     {{#each comments}}
       <li>
         <strong>{{this.userEmail}}:</strong> {{this.text}}
+        {{#if (eq this.userEmail @root.currentUser.email)}} 
+          <a href="/comments/edit?id={{this.id}}">Edit comment</a>
+        {{/if}}
       </li>
     {{/each}}
   </ul>
@@ -43,7 +46,7 @@
 {{/if}}
 
 {{#if currentUser}}
-  <form action="/comments/create" method="post">
+  <form action="/comments/upsert" method="post">
     <input type="hidden" name="_csrf" value="{{_csrfToken}}">
     <input type="hidden" name="bookId" value="{{bookId}}">
     <textarea name="text" placeholder="Write your comment here..." required></textarea>
