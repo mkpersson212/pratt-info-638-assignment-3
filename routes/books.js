@@ -42,7 +42,7 @@ router.get('/show/:id', async (req, res, next) => {
   // and sends user-added comment data to model
     templateVars['currentUser'] = req.session.currentUser;
     templateVars['bookUser'] = BookUser.get(req.params.id, req.session.currentUser.email);
-    templateVars['comments'] = AllForBook.AllForBook(req.params.id);
+    templateVars['comments'] = Comment.AllForBook(req.params.id);
   }
 
   res.render('books/show', templateVars);
